@@ -318,7 +318,7 @@ function LoginForm() {
           >
             <FindEmail>이메일 찾기</FindEmail>
           </Link>
-          <Link to="/">
+          <Link to="/SignUp1">
             <SignupButton
               src={signUpButton}
               alt="회원가입 버튼"

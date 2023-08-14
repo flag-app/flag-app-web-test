@@ -79,7 +79,7 @@ const EmailInput = styled.input`
 //   }
 // `;
 
-const AvailableEmailMessage = styled.p<{
+const Message = styled.p<{
   isValid: boolean;
 }>`
   color: #999999;
@@ -161,7 +161,7 @@ function EmailChange1() {
           <option value="@naver.com">@naver.com</option>
           <option value="@gmail.com">@gmail.com</option>
         </EmailSelect> */}
-        <AvailableEmailMessage isValid={isValidEmail}>
+        <Message isValid={isValidEmail}>
           {isValidEmail ? (
             '사용 가능한 이메일입니다.'
           ) : (
@@ -173,7 +173,7 @@ function EmailChange1() {
               올바른 형식이 아닙니다.
             </>
           )}
-        </AvailableEmailMessage>
+        </Message>
       </InputWrapper>
       <ButtonWrapper>
         <Link
