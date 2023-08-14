@@ -14,7 +14,8 @@ const Logo = styled.img`
   display: block;
 
   @media screen and (max-width: 500px) {
-    display: none;
+    width: 200px;
+    margin-top: 128px;
   }
 `;
 
@@ -39,7 +40,7 @@ const EmailMessage = styled.p`
   margin: 106px auto 0px;
 
   @media screen and (max-width: 500px) {
-    margin: 255px auto 0px;
+    margin: 109px auto 0px;
     font-size: 22px;
   }
 `;
@@ -60,13 +61,12 @@ const EmailAddress = styled.p`
 const LoginButton = styled.img`
   width: 355px;
   height: 41px;
-  border: 0;
   display: block;
   margin: 34px auto 0;
 
   @media screen and (max-width: 500px) {
     width: 350px;
-    margin: 42px auto 0px;
+    margin: 34px auto 0px;
   }
 `;
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Header from '../pages/Header';
 import emailChangeButton from '../contents/desktop/mypage/Btn_마이페이지_Modifyemail.svg';
 import errorIcon from '../contents/desktop/sign/Ic_Error.svg';
 
@@ -84,11 +83,13 @@ const AvailableEmailMessage = styled.p<{
   isValid: boolean;
 }>`
   color: #999999;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: normal;
   font-family: Noto Sans KR;
-  margin: 10px auto 0 0;
+  margin: 8px auto 0 0;
+  display: flex;
+  align-items: center;
 
   @media screen and (max-width: 500px) {
     font-size: 12px;
@@ -147,7 +148,6 @@ function EmailChange1() {
 
   return (
     <Wrapper>
-      <Header />
       <EmailChangeTitle>이메일 변경</EmailChangeTitle>
       <InputWrapper>
         <EmailInput

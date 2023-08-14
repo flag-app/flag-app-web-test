@@ -1,6 +1,4 @@
-import React from 'react';
-//import { useRecoilState } from 'recoil';
-//import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 //import axios from 'axios';
@@ -18,7 +16,8 @@ const Logo = styled.img`
   display: block;
 
   @media screen and (max-width: 500px) {
-    display: none;
+    width: 200px;
+    margin-top: 128px;
   }
 `;
 
@@ -32,7 +31,6 @@ const Wrapper = styled.div`
   text-align: center;
 
   @media screen and (max-width: 500px) {
-    margin-top: 260px;
   }
 `;
 
@@ -82,6 +80,17 @@ const PasswordInput = styled(EmailInput)`
   }
 `;
 
+const ErrorMessage = styled.p`
+  color: #999;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: left;
+
+  @media screen and (max-width: 500px) {
+    margin-left: 50px;
+  }
+`;
+
 const LoginButton = styled.img`
   width: 355px;
   margin: 28px 41.5px 0;
@@ -104,9 +113,9 @@ const FindSignUpWrapper = styled.div`
 `;
 
 const FindPassword = styled.a`
-  height: 22px;
   color: #494949;
   line-height: normal;
+  font-family: Noto Sans KR;
   font-size: 15px;
   font-weight: 400;
   margin-right: 76px;
@@ -133,10 +142,65 @@ const SignupButton = styled.img`
 `;
 
 function LoginForm() {
-  // const [userId, setUserId] = useState('');
-  // const [pw, setPw] = useState('');
-  // const [checkUserId, setCheckUserId] = useState(' ');
-  // const [checkPw, setCheckPw] = useState(' ');
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [userIdError, setUserIdError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const emailValid = (email: string) => {
+    const emailRegExp =
+      /^[0-9a-zA-Z]+@[0-9a-zA-Z]+(\.[a-zA-Z]{2,3})+$/;
+    return emailRegExp.test(email);
+  };
+
+  const handleUserIdChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newUserId = e.target.value;
+    setUserId(newUserId);
+
+    if (newUserId === '') {
+      setUserIdError('아이디를 입력해주세요.');
+    } else if (!emailValid(newUserId)) {
+      setUserIdError('올바른 이메일 형식이 아닙니다.');
+    } else {
+      setUserIdError('');
+    }
+  };
+
+  const handlePasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+
+    if (newPassword === '') {
+      setPasswordError('비밀번호를 입력해주세요.');
+    } else if (newPassword.length < 8) {
+      setPasswordError(
+        '비밀번호는 최소 8자 이상이어야 합니다.',
+      );
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const handleLoginButtonClick = () => {
+    if (
+      !userId ||
+      !password ||
+      userIdError ||
+      passwordError
+    ) {
+      window.alert('입력한 정보를 확인해주세요.');
+    } else {
+      return <Link to="/promise-view" />;
+    }
+  };
+
+  const handleSignUpButtonClick = () => {
+    console.log();
+  };
 
   // const updateUserId = (
   //   e: React.ChangeEvent<HTMLInputElement>,
@@ -220,16 +284,25 @@ function LoginForm() {
           <EmailInput
             type="email"
             placeholder="이메일"
-            //onChange={updateUserId}
+            value={userId}
+            onChange={handleUserIdChange}
           />
+          {userIdError && (
+            <ErrorMessage>{userIdError}</ErrorMessage>
+          )}
           <PasswordInput
             type="password"
             placeholder="비밀번호"
-            //onChange={updatePw}
+            value={password}
+            onChange={handlePasswordChange}
           />
+          {passwordError && (
+            <ErrorMessage>{passwordError}</ErrorMessage>
+          )}
           <LoginButton
             src={loginButton}
             alt="로그인 버튼"
+            onClick={handleLoginButtonClick}
           />
         </InputWrapper>
         <FindSignUpWrapper>
@@ -249,6 +322,7 @@ function LoginForm() {
             <SignupButton
               src={signUpButton}
               alt="회원가입 버튼"
+              onClick={handleSignUpButtonClick}
             />
           </Link>
         </FindSignUpWrapper>
