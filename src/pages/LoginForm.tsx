@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-//import axios from 'axios';
+import axios from 'axios';
 
 import logo from '../contents/Logo_플래그_Small_수정.svg';
 import emailInput from '../contents/desktop/sign/Box_로그인_Email_Unentered.svg';
@@ -178,7 +178,7 @@ function LoginForm() {
       setPasswordError('비밀번호를 입력해주세요.');
     } else if (newPassword.length < 8) {
       setPasswordError(
-        '비밀번호는 최소 8자 이상이어야 합니다.',
+        '비밀번호는 영문, 숫자 조합 최소 8자 이상이어야 합니다.',
       );
     } else {
       setPasswordError('');
@@ -194,6 +194,22 @@ function LoginForm() {
     ) {
       window.alert('입력한 정보를 확인해주세요.');
     } else {
+      const requestData = {
+        userId: userId,
+        password: password,
+      };
+      axios
+        .post('/user/login', requestData, {
+          baseURL: 'http://localhost:8080',
+        })
+        .then(function (response) {
+          console.log(response.data);
+          console.log('로그인 성공');
+        })
+        .catch(function (error) {
+          console.error('Login error: ', error);
+          console.log('로그인 실패');
+        });
       return <Link to="/promise-view" />;
     }
   };
@@ -201,80 +217,6 @@ function LoginForm() {
   const handleSignUpButtonClick = () => {
     console.log();
   };
-
-  // const updateUserId = (
-  //   e: React.ChangeEvent<HTMLInputElement>,
-  // ) => {
-  //   if (e.target.value === '')
-  //     setCheckUserId('아이디를 입력해주세요');
-  //   else {
-  //     setCheckUserId('');
-  //     setUserId(e.target.value);
-  //   }
-  // };
-  // const updatePw = (
-  //   e: React.ChangeEvent<HTMLInputElement>,
-  // ) => {
-  //   if (e.target.value === '')
-  //     setCheckPw('비밀번호를 입력해주세요');
-  //   else {
-  //     setCheckPw('');
-  //     setPw(e.target.value);
-  //   }
-  // };
-  // const [message, setMessage] = useState('');
-
-  // useEffect(() => {
-  //   fetch('/member/login')
-  //     .then((response) => response.text())
-  //     .then((message) => {
-  //       setMessage(message);
-  //     });
-  // }, []);
-
-  /*로그인 버튼 클릭시*/
-  // function loginBtn_click() {
-  //   /*백엔드로 값 전달*/
-  //   if (checkUserId === '' && checkPw === '') {
-  //     axios({
-  //       url: '/member/login.do',
-  //       method: 'post',
-  //       data: {
-  //         data1: userId,
-  //         data2: pw,
-  //       },
-  //       baseURL: 'http://localhost:8080',
-  //       //baseURL: 'http://localhost:8080',
-  //       //withCredentials: true,
-  //     }).then(function (response) {
-  //       console.log(response.data);
-  //       console.log(response.data.user_id);
-  //       if (response.data.user_id === undefined) {
-  //         alert(
-  //           '입력하신 아이디 또는 비밀번호가 일치하지 않습니다',
-  //         );
-  //       } else if (response.data.password === undefined) {
-  //         alert(
-  //           '입력하신 아이디 또는 비밀번호가 일치하지 않습니다',
-  //         );
-  //       } else {
-  //         alert(response.data.user_name + '님 환영합니다!');
-
-  //         sessionStorage.setItem(
-  //           'id',
-  //           response.data.user_id,
-  //         ); // sessionStorage에 id라는 key 값으로 저장
-  //         sessionStorage.setItem(
-  //           'name',
-  //           response.data.user_name,
-  //         );
-  //         document.location.href = '/';
-  //       }
-  //     });
-  //   } else {
-  //     alert('로그인 입력폼을 확인해주세요');
-  //   }
-  // }
 
   return (
     <>
@@ -299,11 +241,22 @@ function LoginForm() {
           {passwordError && (
             <ErrorMessage>{passwordError}</ErrorMessage>
           )}
-          <LoginButton
-            src={loginButton}
-            alt="로그인 버튼"
-            onClick={handleLoginButtonClick}
-          />
+          <Link
+            to={
+              userId ||
+              password ||
+              !userIdError ||
+              !passwordError
+                ? '/promise-view'
+                : '#'
+            }
+          >
+            <LoginButton
+              src={loginButton}
+              alt="로그인 버튼"
+              onClick={handleLoginButtonClick}
+            />
+          </Link>
         </InputWrapper>
         <FindSignUpWrapper>
           <Link
