@@ -224,18 +224,19 @@ function LoginForm() {
           password: requestData.password,
         },
       })
-        .then((response) => {     
-          console.log(response.data.isSuccess);     
-            if(response.data.isSuccess === true){
-              sessionStorage.setItem('token', response.data.result);
-              navigate('/promise-view');
-              setIsLogin(true);
-              console.log('로그인 성공');
-            }
-            else if(response.data.isSuccess === false){
-              alert('아이디 또는 비밀번호를 확인해주세요');
-            }
-            
+        .then((response) => {
+          console.log(response.data.isSuccess);
+          if (response.data.isSuccess === true) {
+            sessionStorage.setItem(
+              'token',
+              response.data.result,
+            );
+            navigate('/promise-view');
+            setIsLogin(true);
+            console.log('로그인 성공');
+          } else if (response.data.isSuccess === false) {
+            alert('아이디 또는 비밀번호를 확인해주세요');
+          }
         })
         .catch((error) => {
           console.log('로그인 실패');
@@ -274,11 +275,11 @@ function LoginForm() {
               <ErrorMessage>{passwordError}</ErrorMessage>
             )}
           </MessageWrapper>
-            <LoginButton
-              src={loginButton}
-              alt="로그인 버튼"
-              onClick={handleLoginButtonClick}
-            />
+          <LoginButton
+            src={loginButton}
+            alt="로그인 버튼"
+            onClick={handleLoginButtonClick}
+          />
         </InputWrapper>
         <FindSignUpWrapper>
           <Link
