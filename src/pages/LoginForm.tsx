@@ -5,6 +5,9 @@ import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { isLoginAtom } from '../recoil/Atoms';
 
+import { useRecoilState } from 'recoil';
+import { isLoginAtom } from '../recoil/Atoms';
+
 import logo from '../contents/Logo_플래그_Small_수정.svg';
 import emailInput from '../contents/desktop/sign/Box_로그인_Email_Unentered.svg';
 import passwordInput from '../contents/desktop/sign/Box_로그인_Password_Unentered.svg';
@@ -155,6 +158,8 @@ function LoginForm() {
   const [userIdError, setUserIdError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
+
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
