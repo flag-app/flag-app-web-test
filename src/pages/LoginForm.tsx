@@ -59,7 +59,7 @@ const EmailInput = styled.input`
 
   @media screen and (max-width: 500px) {
     background-image: none;
-    width: 350px;
+    width: 300px;
     height: 35px;
     font-size: 14px;
     font-family: Noto Sans KR;
@@ -96,19 +96,17 @@ const LoginButton = styled.img`
   margin: 28px 41.5px 0;
 
   @media screen and (max-width: 500px) {
-    width: 340px;
+    width: 300px;
   }
 `;
 
 const FindSignUpWrapper = styled.div`
-  width: 395px;
   margin: 30px auto 0;
   display: flex;
   justify-content: center;
   align-items: center;
 
   @media screen and (max-width: 360px) {
-    width: 283px;
   }
 `;
 
@@ -121,8 +119,8 @@ const FindPassword = styled.a`
   margin-right: 76px;
   margin-top: 62px;
 
-  @media screen and (max-width: 360px) {
-    font-size: 12px;
+  @media screen and (max-width: 500px) {
+    font-size: 13px;
     margin-right: 40px;
   }
 `;
@@ -135,9 +133,8 @@ const SignupButton = styled.img`
   border: 0;
   margin: 0px;
 
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 500px) {
     width: 75px;
-    height: 25px;
   }
 `;
 
@@ -194,14 +191,12 @@ function LoginForm() {
     ) {
       window.alert('입력한 정보를 확인해주세요.');
     } else {
-      const requestData = {
-        userId: userId,
-        password: password,
-      };
-      axios
-        .post('/user/login', requestData, {
-          baseURL: 'http://localhost:8080',
-        })
+      axios({
+        method: 'get',
+        url: '/user/login',
+        data: { userId: userId, password: password },
+        baseURL: 'http://localhost:8080',
+      })
         .then(function (response) {
           console.log(response.data);
           console.log('로그인 성공');
@@ -260,16 +255,16 @@ function LoginForm() {
         </InputWrapper>
         <FindSignUpWrapper>
           <Link
-            to="/reset-password"
-            style={{ textDecoration: 'none' }}
-          >
-            <FindPassword>비밀번호 찾기</FindPassword>
-          </Link>
-          <Link
             to="/find-email"
             style={{ textDecoration: 'none' }}
           >
             <FindEmail>이메일 찾기</FindEmail>
+          </Link>
+          <Link
+            to="/reset-password"
+            style={{ textDecoration: 'none' }}
+          >
+            <FindPassword>비밀번호 찾기</FindPassword>
           </Link>
           <Link to="/SignUp1">
             <SignupButton

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -6,7 +6,6 @@ import { emailState } from '../recoil/Atoms';
 
 import logo from '../contents/Logo_플래그_Small_수정.svg';
 import nextButton from '../contents/desktop/sign/Btn_다음.svg'; // 다음
-import errorIcon from '../contents/desktop/sign/Ic_Error.svg';
 
 const Logo = styled.img`
   width: 253.662109375px;
@@ -29,8 +28,18 @@ const Wrapper = styled.div`
   }
 `;
 
+const TitleWrapper = styled.div`
+  width: 450px;
+  margin: 84px auto 0;
+  text-align: left;
+
+  @media screen and (max-width: 500px) {
+    width: 300px;
+    margin-top: 92px;
+  }
+`;
+
 const ResetPasswordTitle = styled.h2`
-  margin: 88px auto 0 535px;
   font-size: 20px;
   font-weight: 700;
   line-height: normal;
@@ -38,7 +47,6 @@ const ResetPasswordTitle = styled.h2`
 
   @media screen and (max-width: 500px) {
     font-size: 22px;
-    margin: 97px auto 0 75px;
   }
 `;
 
@@ -68,33 +76,10 @@ const EmailInput = styled.input`
   display: inline;
 
   @media screen and (max-width: 500px) {
-    width: 350px;
+    width: 300px;
     font-size: 15px;
-    margin: 20px auto 0px;
+    margin: 15px auto 0px;
   }
-`;
-
-const Message = styled.div<{
-  isValid: boolean;
-}>`
-  color: #999999;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: normal;
-  font-family: Noto Sans KR;
-  margin: 8px auto 0 0;
-  display: flex;
-  align-items: center;
-
-  @media screen and (max-width: 500px) {
-    font-size: 12px;
-  }
-`;
-
-const ErrorIcon = styled.img`
-  width: 23px;
-  height: 23px;
-  margin-right: 8px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -109,8 +94,7 @@ const NextButton = styled.img`
   margin: 34px auto 0;
 
   @media screen and (max-width: 500px) {
-    width: 350px;
-    margin: 28px auto 0;
+    width: 300px;
   }
 `;
 
@@ -121,6 +105,7 @@ const FindEmailWrapper = styled.div`
   justify-content: center;
 
   @media screen and (max-width: 360px) {
+    margin-top: 20px;
   }
 `;
 
@@ -153,29 +138,15 @@ const FindEmail = styled.a`
 
 function ResetPassword1() {
   const [email, setEmail] = useRecoilState(emailState);
-  const [inputEmail, setInputEmail] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(false);
-
-  const emailValid = (inputEmail: string) => {
-    const emailRegExp =
-      /^[0-9a-zA-Z]+@[0-9a-zA-Z]+(\.[a-zA-Z]{2,3})+$/;
-    return emailRegExp.test(inputEmail);
-  };
 
   const handleEmailInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const newEmail = e.target.value;
-    setInputEmail(newEmail);
-    setIsValidEmail(emailValid(newEmail));
+    setEmail(e.target.value);
   };
 
   const handleNextButtonClick = () => {
-    if (isValidEmail) {
-      return <Link to="/password-change-email" />;
-    } else {
-      window.alert('이메일을 제대로 입력해주세요.');
-    }
+    console.log();
   };
 
   const handleFindEmailClick = () => {
@@ -186,9 +157,11 @@ function ResetPassword1() {
     <>
       <Wrapper>
         <Logo src={logo} alt="로고" />
-        <ResetPasswordTitle>
-          비밀번호 찾기
-        </ResetPasswordTitle>
+        <TitleWrapper>
+          <ResetPasswordTitle>
+            비밀번호 찾기
+          </ResetPasswordTitle>
+        </TitleWrapper>
         <InputWrapper>
           <EmailInput
             type="email"
@@ -196,19 +169,6 @@ function ResetPassword1() {
             value={email}
             onChange={handleEmailInputChange}
           />
-          <Message isValid={isValidEmail}>
-            {isValidEmail ? (
-              '사용 가능한 이메일입니다.'
-            ) : (
-              <>
-                <ErrorIcon
-                  src={errorIcon}
-                  alt="에러 아이콘"
-                />
-                올바른 형식이 아닙니다.
-              </>
-            )}
-          </Message>
         </InputWrapper>
         <ButtonWrapper>
           <Link
@@ -225,7 +185,7 @@ function ResetPassword1() {
           <EmailReminder>
             이메일이 기억이 나지 않나요?
           </EmailReminder>
-          <Link to={isValidEmail ? '/find-email' : '#'}>
+          <Link to="/find-email">
             <FindEmail onClick={handleFindEmailClick}>
               이메일 찾기
             </FindEmail>
