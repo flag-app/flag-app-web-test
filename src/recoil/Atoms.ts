@@ -41,12 +41,14 @@ export interface IOption {
 
 export interface IFlag {
   flagName: string;
+  hostId: number;
   checkedFriends: IFriendTypes[];
   selectedDates: string[];
   cycle: number;
   minimumTime: number;
   flagPlace: IOption;
   flagMemo: IOption;
+  guestId: number[];
   selectedCell: number[];
 }
 
