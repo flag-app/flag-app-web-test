@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { emailState } from '../recoil/Atoms';
-import axios from 'axios';
 
 import logo from '../contents/Logo_플래그_Small_수정.svg';
 import emailIcon from '../contents/desktop/sign/Ic_비밀번호변경이메일_Email.svg';
@@ -132,48 +131,10 @@ const LoginButton = styled.img`
 
 function ResetPassword2() {
   const email = useRecoilValue(emailState);
-  const [tempPassword, setTempPassword] = useState('');
-  const [passwordValid, setPasswordValid] = useState(true);
-  const navigate = useNavigate();
 
-  const handleNextButtonClick = () => {
-    axios({
-      method: 'POST',
-      url: '/user/reset-password',
-      data: {
-        email: email,
-      },
-    })
-      .then((response) => {
-        if (response.data.isSuccess === false) {
-          const getTempPassword = response.data.result; // 임시 비번
-          if (tempPassword === getTempPassword) {
-            window.alert('확인이 완료되었습니다.');
-            navigate('/new-password');
-          } else {
-            setPasswordValid(false);
-            window.alert(
-              '임시 비밀번호를 다시 확인하세요.',
-            );
-          }
-        } else if (response.data.isSuccess === true) {
-          alert(
-            '인증번호 이메일 발송 실패: ' +
-              response.data.message,
-          );
-        }
-      })
-      .catch((error) => {
-        console.error('AxiosError:', error);
-        console.log('인증번호 메일 실패');
-      });
-  };
-
-  const handleTempPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setTempPassword(e.target.value);
-    setPasswordValid(true);
+  const handleEmailSentClick = () => {
+    console.log();
+    //axios 자리
   };
 
   return (
@@ -192,14 +153,14 @@ function ResetPassword2() {
           <TempPasswordInput
             type="password"
             placeholder="임시 비밀번호 입력"
-            value={tempPassword}
-            onChange={handleTempPasswordChange}
           />
         </InputWrapper>
-        <LoginButton
-          src={nextButton}
-          onClick={handleNextButtonClick}
-        />
+        <Link to="/new-password">
+          <LoginButton
+            src={nextButton}
+            onClick={handleEmailSentClick}
+          />
+        </Link>
       </Wrapper>
     </>
   );

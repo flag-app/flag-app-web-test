@@ -166,16 +166,18 @@ function ResetPassword1() {
       .then((response) => {
         console.log(response.data.isSuccess);
         if (response.data.isSuccess === true) {
-          navigate('/password-change-email');
           setEmailSend(true);
           console.log('인증번호 이메일 발송 성공');
+          navigate('/password-change-email');
           // <Link
           //   to="/password-change-email"
           //   state={{ email: email }}
-          // />;이
+          // />;
         } else if (response.data.isSuccess === false) {
-          alert('인증번호 이메일 발송 실패: ');
-          console.log(response.data.message);
+          alert(
+            '인증번호 이메일 발송 실패: ' +
+              response.data.message,
+          );
         }
       })
       .catch((error) => {
