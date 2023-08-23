@@ -61,8 +61,8 @@ const EmailAddress = styled.p`
 `;
 
 const EmailMessage = styled.p`
-  margin-top: 6px;
-  font-size: 25px;
+  margin-top: 8px;
+  font-size: 22px;
   font-weight: 700;
   line-height: normal;
   font-family: Inter;
@@ -74,14 +74,45 @@ const EmailMessage = styled.p`
 `;
 
 const ChangeEmail = styled.p`
-  width: 378px;
-  margin: 15px auto 0px;
+  margin: 17px auto 0px;
   color: #696767;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   line-height: normal;
+  white-space: pre-wrap;
 
   @media screen and (max-width: 500px) {
+    font-size: 15px;
+    width: 300px;
+  }
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (max-width: 500px) {
+    margin: 0 auto;
+  }
+`;
+
+const TempPasswordInput = styled.input`
+  width: 450px;
+  height: 50px;
+  background-color: #d9d9d9;
+  margin-top: 15px;
+  border-radius: 13px;
+  padding-left: 20px;
+  outline: none;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: normal;
+  border: 0;
+
+  @media screen and (max-width: 500px) {
+    width: 300px;
     font-size: 15px;
   }
 `;
@@ -94,7 +125,7 @@ const LoginButton = styled.img`
 
   @media screen and (max-width: 500px) {
     width: 300px;
-    margin: 38px auto 0;
+    margin: 20px auto 0;
   }
 `;
 
@@ -103,6 +134,7 @@ function ResetPassword2() {
 
   const handleEmailSentClick = () => {
     console.log();
+    //axios 자리
   };
 
   return (
@@ -112,11 +144,17 @@ function ResetPassword2() {
         <EmailIcon src={emailIcon} alt="이메일 아이콘" />
         <EmailAddress>{email}</EmailAddress>
         <EmailMessage>
-          으로 비밀번호 변경 이메일을 보냈습니다!
+          으로 임시 비밀번호 발송이 완료되었습니다!
         </EmailMessage>
         <ChangeEmail>
-          이메일 속 링크를 통해 비밀번호를 변경하세요.
+          이메일로 발송된 임시 비밀번호로 로그인하세요.
         </ChangeEmail>
+        <InputWrapper>
+          <TempPasswordInput
+            type="password"
+            placeholder="임시 비밀번호 입력"
+          />
+        </InputWrapper>
         <Link to="/new-password">
           <LoginButton
             src={nextButton}

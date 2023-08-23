@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { emailState } from '../recoil/Atoms';
 import axios from 'axios';
@@ -139,6 +139,8 @@ const FindEmail = styled.a`
 
 function ResetPassword1() {
   const [email, setEmail] = useRecoilState(emailState);
+  const [emailSend, setEmailSend] = useState(true);
+  const navigate = useNavigate();
 
   const handleEmailInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -146,24 +148,41 @@ function ResetPassword1() {
     setEmail(e.target.value);
   };
 
-  const handleNextButtonClick = () => {
-    const requestData = {
-      email: email,
-    };
+  const handleNextButtonClick = () => { //이메일 인증
+    if (!email) {
+      window.alert('이메일을 입력해주세요.');
+    }
+    // const requestData = {
+    //   email: email,
+    // };
     axios({
       method: 'POST',
       url: '/user/reset-password',
       data: {
-        email: requestData.email,
+        email: email,
+        //email: requestData.email,
       },
     })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.isSuccess);
+        if (response.data.isSuccess === true) {
+          navigate('/password-change-email');
+          setEmailSend(true);
+          console.log('인증번호 이메일 발송 성공');
+          <Link
+            to="/password-change-email"
+            state={{ email: email }}
+          />;
+        } else if (response.data.isSuccess === false) {
+          alert('인증번호 이메일 발송 실패: ');
+          console.log(response.data.message);
+        }
       })
       .catch((error) => {
         console.error('AxiosError:', error);
-        console.log('인증번호 실패');
+        console.log('인증번호 메일 실패');
       });
+    //axios
   };
 
   const handleFindEmailClick = () => {
@@ -188,15 +207,15 @@ function ResetPassword1() {
           />
         </InputWrapper>
         <ButtonWrapper>
-          <Link
+          {/* <Link
             to="/password-change-email"
             state={{ email: email }}
-          >
-            <NextButton
-              src={nextButton}
-              onClick={handleNextButtonClick}
-            />
-          </Link>
+          > */}
+          <NextButton
+            src={nextButton}
+            onClick={handleNextButtonClick}
+          />
+          {/* </Link> */}
         </ButtonWrapper>
         <FindEmailWrapper>
           <EmailReminder>

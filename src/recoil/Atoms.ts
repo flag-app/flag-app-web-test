@@ -25,6 +25,11 @@ export const isLoginAtom = atom({
   default: false,
 });
 
+export const sendEmailState = atom({
+  key: 'sendEmailState',
+  default: false,
+});
+
 export interface IFriendTypes {
   name: string;
 }
