@@ -5,9 +5,6 @@ import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { isLoginAtom } from '../recoil/Atoms';
 
-import { useRecoilState } from 'recoil';
-import { isLoginAtom } from '../recoil/Atoms';
-
 import logo from '../contents/Logo_플래그_Small_수정.svg';
 import emailInput from '../contents/desktop/sign/Box_로그인_Email_Unentered.svg';
 import passwordInput from '../contents/desktop/sign/Box_로그인_Password_Unentered.svg';
@@ -161,8 +158,6 @@ function LoginForm() {
 
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
-  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-
   const emailValid = (email: string) => {
     const emailRegExp =
       /^[0-9a-zA-Z]+@[0-9a-zA-Z]+(\.[a-zA-Z]{2,3})+$/;
@@ -229,19 +224,18 @@ function LoginForm() {
           password: requestData.password,
         },
       })
-        .then((response) => {
-          console.log(response.data.isSuccess);
-          if (response.data.isSuccess === true) {
-            sessionStorage.setItem(
-              'token',
-              response.data.result,
-            );
-            navigate('/promise-view');
-            setIsLogin(true);
-            console.log('로그인 성공');
-          } else if (response.data.isSuccess === false) {
-            alert('아이디 또는 비밀번호를 확인해주세요');
-          }
+        .then((response) => {     
+          console.log(response.data.isSuccess);     
+            if(response.data.isSuccess == true){
+              sessionStorage.setItem('token', response.data.result);
+              navigate('/promise-view');
+              setIsLogin(true);
+              console.log('로그인 성공');
+            }
+            else if(response.data.isSuccess == false){
+              alert('아이디 또는 비밀번호를 확인해주세요');
+            }
+            
         })
         .catch((error) => {
           console.log('로그인 실패');
@@ -280,11 +274,11 @@ function LoginForm() {
               <ErrorMessage>{passwordError}</ErrorMessage>
             )}
           </MessageWrapper>
-          <LoginButton
-            src={loginButton}
-            alt="로그인 버튼"
-            onClick={handleLoginButtonClick}
-          />
+            <LoginButton
+              src={loginButton}
+              alt="로그인 버튼"
+              onClick={handleLoginButtonClick}
+            />
         </InputWrapper>
         <FindSignUpWrapper>
           <Link

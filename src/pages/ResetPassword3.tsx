@@ -171,7 +171,7 @@ function ResetPassword3() {
         newPassword: newPassword,
       };
       axios({
-        url: '/user/{userId}/password2',
+        url: '/user/password/change',
         method: 'PATCH',
         headers: {
           Authorization: token,

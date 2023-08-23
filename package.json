@@ -2,7 +2,7 @@
   "name": "flag-web-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
+  "proxy": "http://ec2-13-209-60-211.ap-northeast-2.compute.amazonaws.com:8080/",
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
     "@emailjs/browser": "^3.11.0",
@@ -21,6 +21,7 @@
     "dayjs": "^1.11.9",
     "homepage": ".",
     "moment": "^2.29.4",
+    "nodemailer": "^6.9.4",
     "react": "^18.2.0",
     "react-calendar": "^4.6.0",
     "react-dom": "^18.2.0",

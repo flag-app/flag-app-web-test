@@ -148,19 +148,19 @@ function ResetPassword1() {
     setEmail(e.target.value);
   };
 
-  const handleNextButtonClick = () => { //이메일 인증
+  const handleNextButtonClick = async () => {
+    //이메일 인증
     if (!email) {
       window.alert('이메일을 입력해주세요.');
     }
-    // const requestData = {
-    //   email: email,
-    // };
-    axios({
+    const requestData = {
+      email: email,
+    };
+    await axios({
       method: 'POST',
       url: '/user/reset-password',
       data: {
-        email: email,
-        //email: requestData.email,
+        email: requestData.email,
       },
     })
       .then((response) => {
@@ -169,10 +169,10 @@ function ResetPassword1() {
           navigate('/password-change-email');
           setEmailSend(true);
           console.log('인증번호 이메일 발송 성공');
-          <Link
-            to="/password-change-email"
-            state={{ email: email }}
-          />;
+          // <Link
+          //   to="/password-change-email"
+          //   state={{ email: email }}
+          // />;이
         } else if (response.data.isSuccess === false) {
           alert('인증번호 이메일 발송 실패: ');
           console.log(response.data.message);
@@ -182,11 +182,10 @@ function ResetPassword1() {
         console.error('AxiosError:', error);
         console.log('인증번호 메일 실패');
       });
-    //axios
   };
 
   const handleFindEmailClick = () => {
-    console.log();
+    navigate('/find-email');
   };
 
   return (
@@ -221,11 +220,9 @@ function ResetPassword1() {
           <EmailReminder>
             이메일이 기억이 나지 않나요?
           </EmailReminder>
-          <Link to="/find-email">
-            <FindEmail onClick={handleFindEmailClick}>
-              이메일 찾기
-            </FindEmail>
-          </Link>
+          <FindEmail onClick={handleFindEmailClick}>
+            이메일 찾기
+          </FindEmail>
         </FindEmailWrapper>
       </Wrapper>
     </>
