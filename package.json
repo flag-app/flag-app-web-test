@@ -2,10 +2,6 @@
   "name": "flag-web-app",
   "version": "0.1.0",
   "private": true,
-<<<<<<< HEAD
-=======
-  "proxy": "http://localhost:8080",
->>>>>>> develop
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -14,7 +10,6 @@
     "@types/node": "^16.18.37",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
-    "@types/react-select": "^5.0.1",
     "@types/styled-components": "^5.1.26",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,11 +17,6 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.14.0",
     "react-scripts": "5.0.1",
-<<<<<<< HEAD
-=======
-    "react-selecto": "^1.26.0",
-    "recoil": "^0.7.7",
->>>>>>> develop
     "styled-components": "^6.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
